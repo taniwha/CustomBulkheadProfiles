@@ -1,7 +1,7 @@
 /*
 	BulkheadProfiles.cs
 
-	Optimal circularization burn periapsis from hyperbolic trajectory.
+	Customized tooltips and icons for bulkhead profiles.
 
 	Copyright (C) 2018 Bill Currie <bill@taniwha.org>
 
