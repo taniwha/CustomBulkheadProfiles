@@ -9,6 +9,9 @@ TARGETS		:= ${MODNAME}.dll
 
 MOD_FILES := \
     AssemblyInfo.cs	\
+	BulkheadProfileConfigs.cs \
+	BulkheadProfileData.cs \
+	BulkheadProfileLoader.cs \
 	BulkheadProfiles.cs \
 	VersionReport.cs \
 	$e

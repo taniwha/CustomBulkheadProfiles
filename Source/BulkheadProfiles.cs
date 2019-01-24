@@ -38,13 +38,6 @@ using KSP.UI.Screens;
 
 namespace BulkheadProfiles {
 
-	public class BulkheadProfileData
-	{
-		public string name;
-		public string displayName;
-		public Icon icon;
-	}
-
 	[KSPAddon (KSPAddon.Startup.EditorAny, false)]
 	public class BulkheadProfiles : MonoBehaviour
 	{
@@ -62,7 +55,7 @@ namespace BulkheadProfiles {
 			for (int i = profilesCategory.subcategories.Count; i-- > 0; ) {
 				var cat = profilesCategory.subcategories[i];
 				var button = cat.button;
-				Debug.Log ($"[BulkheadProfiles] {button.categorydisplayName}");
+				//Debug.Log ($"[BulkheadProfiles] {button.categoryName} {button.categorydisplayName}");
 				BulkheadProfileData bp = null;
 				if (bulkheadProfiles.TryGetValue (button.categoryName, out bp)) {
 					SetButtonDisplayName (button, bp.displayName);
@@ -81,6 +74,8 @@ namespace BulkheadProfiles {
 		}
 		void onGUIEditorToolbarReady ()
 		{
+			bulkheadProfiles = BulkheadProfileConfigs.BulkheadProfiles;
+
 			var pcfilters = PartCategorizer.Instance.filters;
 			for (int i = pcfilters.Count; i-- > 0; ) {
 				var cat = pcfilters[i];
@@ -95,9 +90,6 @@ namespace BulkheadProfiles {
 
 		void Awake ()
 		{
-			if (bulkheadProfiles == null) {
-				bulkheadProfiles = new Dictionary<string, BulkheadProfileData>();
-			}
 			GameEvents.onGUIEditorToolbarReady.Add (onGUIEditorToolbarReady);
 		}
 
