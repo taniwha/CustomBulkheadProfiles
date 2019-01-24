@@ -22,8 +22,13 @@ texture paths. eg
 ```
 BulkheadProfileDefinition {
     name = dgsize1
-	displayName = DG 1 [1.875m]
-	normalIcon = DiamondGrid/Textures/size1
-	selectedIcon = DiamondGrid/Textures/size1
+    displayName = DG 1 [1.875m]
+    normalIcon = DiamondGrid/Textures/size1
+    selectedIcon = DiamondGrid/Textures/size1
 }
 ```
+
+During KSP loading, Custom Bulkhead Profiles will read every
+BulkheadProfileDefinition it finds and then use those definitions to set
+up the profile filter buttons in the editor (VAB/SPH). Each definition
+applies to only one profile.
