@@ -32,29 +32,72 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using RUI.Icons.Selectable;
 
 using KSP.UI.Screens;
 
 namespace BulkheadProfiles {
 
+	public class BulkheadProfileData
+	{
+		public string name;
+		public string displayName;
+		public Icon icon;
+	}
+
 	[KSPAddon (KSPAddon.Startup.EditorAny, false)]
 	public class BulkheadProfiles : MonoBehaviour
 	{
+		static Dictionary<string, BulkheadProfileData> bulkheadProfiles;
+
+		void SetButtonDisplayName (PartCategorizerButton button, string name)
+		{
+			button.categorydisplayName = name;
+			var ttc = button.tooltipController;
+			ttc.textString = name;
+		}
+
+		void ProcessProfiles (PartCategorizer.Category profilesCategory)
+		{
+			for (int i = profilesCategory.subcategories.Count; i-- > 0; ) {
+				var cat = profilesCategory.subcategories[i];
+				var button = cat.button;
+				Debug.Log ($"[BulkheadProfiles] {button.categorydisplayName}");
+				BulkheadProfileData bp = null;
+				if (bulkheadProfiles.TryGetValue (button.categoryName, out bp)) {
+					SetButtonDisplayName (button, bp.displayName);
+					if (bp.icon != null) {
+						button.SetIcon (bp.icon);
+					}
+				} else {
+					// KSP does not set the display name (which is used for
+					// the tool tip), so set it to the category name so at
+					// least something shows.
+					if (string.IsNullOrEmpty (button.categorydisplayName)) {
+						SetButtonDisplayName (button, button.categoryName);
+					}
+				}
+			}
+		}
 		void onGUIEditorToolbarReady ()
 		{
 			var pcfilters = PartCategorizer.Instance.filters;
 			for (int i = pcfilters.Count; i-- > 0; ) {
 				var cat = pcfilters[i];
 				var button = cat.button;
-				Debug.Log ($"[BulkheadProfiles] {button.categoryName}");
+				//Debug.Log ($"[BulkheadProfiles] {button.categoryName}");
 				if (button.categoryName == "Filter by Cross-Section Profile") {
-					Debug.Log ($"  found it");
+					//Debug.Log ("  found it");
+					ProcessProfiles (cat);
 				}
 			}
 		}
 
 		void Awake ()
 		{
+			if (bulkheadProfiles == null) {
+				bulkheadProfiles = new Dictionary<string, BulkheadProfileData>();
+			}
 			GameEvents.onGUIEditorToolbarReady.Add (onGUIEditorToolbarReady);
 		}
 
