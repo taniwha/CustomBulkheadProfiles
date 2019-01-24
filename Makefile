@@ -1,4 +1,4 @@
-export MODNAME		:= BulkheadProfiles
+export MODNAME		:= CustomBulkheadProfiles
 export KSPDIR		:= ${HOME}/ksp/KSP_linux
 export MANAGED		:= ${KSPDIR}/KSP_Data/Managed
 export GAMEDATA		:= ${KSPDIR}/GameData
@@ -33,7 +33,7 @@ install:
 	cp ${DATA} ${MODGAMEDATA}
 
 info:
-	@echo "CircBurn Build Information"
+	@echo "${MODNAME} Build Information"
 	@echo "    resgen2:  ${RESGEN2}"
 	@echo "    gmcs:     ${GMCS}"
 	@echo "    git:      ${GIT}"

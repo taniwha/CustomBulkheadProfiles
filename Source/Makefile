@@ -1,4 +1,4 @@
-export MODNAME		:= BulkheadProfiles
+export MODNAME		:= CustomBulkheadProfiles
 export KSPDIR		:= ${HOME}/ksp/KSP_linux
 export MANAGED		:= ${KSPDIR}/KSP_Data/Managed
 export GAMEDATA		:= ${KSPDIR}/GameData
